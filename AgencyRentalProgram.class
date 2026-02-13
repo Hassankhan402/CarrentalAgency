@@ -1,0 +1,81 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+import java.util.Scanner;
+
+public class AgencyRentalProgram {
+   public AgencyRentalProgram() {
+   }
+
+   public static void main(String[] var0) {
+      VehicleRates var1 = new VehicleRates(24.95, 169.95, 514.95, 0.16, 14.95);
+      VehicleRates var2 = new VehicleRates(29.95, 189.95, 679.95, 0.16, 14.95);
+      VehicleRates var3 = new VehicleRates(36.95, 224.95, 687.95, 0.21, 19.95);
+      CurrentRates var4 = new CurrentRates(var1, var2, var3);
+      Vehicles var5 = new Vehicles(20);
+      populate(var5);
+      Transactions var6 = new Transactions();
+      Scanner var7 = new Scanner(System.in);
+      boolean var9 = false;
+
+      while(!var9) {
+         UserInterface var8 = getUI(var7);
+         if (var8 == null) {
+            var9 = true;
+         } else {
+            if (!SystemInterface.initialized()) {
+               SystemInterface.initSystem(var4, var5, var6);
+            }
+
+            var8.start(var7);
+         }
+      }
+
+      System.out.println("Exiting program. Goodbye.");
+      var7.close();
+   }
+
+   public static UserInterface getUI(Scanner var0) {
+      boolean var1 = false;
+      Object var2 = null;
+
+      while(!var1) {
+         System.out.print("Select interface: 1 – Employee, 2 – Manager, 3 – quit: ");
+
+         int var3;
+         try {
+            var3 = Integer.parseInt(var0.nextLine().trim());
+         } catch (NumberFormatException var5) {
+            System.out.println("Invalid selection – please reenter");
+            continue;
+         }
+
+         if (var3 == 1) {
+            var2 = new EmployeeUI();
+            var1 = true;
+         } else if (var3 == 2) {
+            var2 = new ManagerUI();
+            var1 = true;
+         } else if (var3 == 3) {
+            var2 = null;
+            var1 = true;
+         } else {
+            System.out.println("Invalid selection – please reenter");
+         }
+      }
+
+      return (UserInterface)var2;
+   }
+
+   private static void populate(Vehicles var0) {
+      var0.add(new Car("Toyota Prius", 57, "AED456"));
+      var0.add(new Car("Honda Insight", 55, "DEF123"));
+      var0.add(new Car("Hyundai Elantra Hybrid", 53, "JHK857"));
+      var0.add(new SUV("Toyota RAV4 Hybrid", 39, "DPF450"));
+      var0.add(new SUV("Ford Explorer Hybrid", 31, "WCH302"));
+      var0.add(new SUV("Honda Pilot Hybrid", 36, "KSB698"));
+      var0.add(new SUV("Lexus NX 450h+", 37, "GEK334"));
+      var0.add(new Minivan("Toyota Sienna", 36, "AGH890"));
+      var0.add(new Minivan("Chrysler Pacifica Hybrid", 82, "BFJ386"));
+      var0.add(new Minivan("Honda Odyssey", 22, "KCM341"));
+      var0.add(new Minivan("Kia Carnival", 22, "TSH580"));
+   }
+}
